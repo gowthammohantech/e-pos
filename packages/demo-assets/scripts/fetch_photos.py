@@ -166,17 +166,26 @@ def candidates(items: list[dict], out: Path) -> None:
 
 def build(items: list[dict], out: Path) -> None:
     cache = json.loads((out / 'cands.json').read_text())
+    credits_file = ROOT / 'public' / 'demo' / 'CREDITS.json'
+    old = json.loads(credits_file.read_text()) if credits_file.exists() else {}
     credits = {}
     for it in items:
         q = QUERIES[it['name']]
         c = cache[f"{q['src']}:{q['q']}"][q.get('pick', 0)]
         dest = ROOT / 'public' / it['url']
         dest.parent.mkdir(parents=True, exist_ok=True)
-        raw = get(c['thumb'])
-        (fit_pack(raw) if q['src'] == 'off' or q.get('fit') == 'pad' else square(raw)).save(dest, 'WEBP', quality=80, method=6)
-        credits[it['url']] = {k: c[k] for k in ('title', 'author', 'license', 'licenseUrl', 'source')}
-        print('ok', it['url'], it['name'])
-    (ROOT / 'public' / 'demo' / 'CREDITS.json').write_text(json.dumps(credits, indent=1, ensure_ascii=False) + '\n')
+        meta = {k: c[k] for k in ('title', 'author', 'license', 'licenseUrl', 'source')}
+        if not (dest.exists() and old.get(it['url']) == meta):  # unchanged picks aren't re-downloaded
+            try:
+                raw = get(c['thumb'])
+            except Exception as e:  # noqa: BLE001 — report and continue; a re-run fetches the rest
+                print(f"ERR {it['name']}: {e}")
+                continue
+            (fit_pack(raw) if q['src'] == 'off' or q.get('fit') == 'pad' else square(raw)).save(dest, 'WEBP', quality=80, method=6)
+            print('ok', it['url'], it['name'])
+        credits[it['url']] = meta
+    credits_file.parent.mkdir(parents=True, exist_ok=True)
+    credits_file.write_text(json.dumps(credits, indent=1, ensure_ascii=False) + '\n')
     write_native(sorted(credits))
 
 

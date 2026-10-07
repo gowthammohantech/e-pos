@@ -1,8 +1,8 @@
 {
   "_comment": "Search query per demo item. src: off = Open Food Facts pack shot ('brand-tag|product words'), commons = Wikimedia Commons search. pick = index of the chosen candidate; fit: pad letterboxes instead of cropping.",
   "Aavin Toned Milk 500ml": {
-    "src": "commons",
-    "q": "glass of milk"
+    "src": "off",
+    "q": "aavin|green magic milk"
   },
   "Amul Butter 100g": {
     "src": "off",
@@ -10,8 +10,8 @@
     "pick": 0
   },
   "Amul Taaza Curd 400g": {
-    "src": "commons",
-    "q": "dahi yogurt bowl"
+    "src": "off",
+    "q": "amul|masti dahi"
   },
   "Britannia Cheese Slices 200g": {
     "src": "commons",
@@ -155,7 +155,8 @@
   },
   "Vim Dishwash Bar 300g": {
     "src": "commons",
-    "q": "dish soap"
+    "q": "dish soap",
+    "pick": 1
   },
   "Harpic Power Plus 1L": {
     "src": "commons",
@@ -184,7 +185,8 @@
   },
   "Potato": {
     "src": "commons",
-    "q": "potatoes market"
+    "q": "potatoes market",
+    "pick": 0
   },
   "Banana Robusta": {
     "src": "commons",
@@ -303,7 +305,8 @@
   },
   "Crocin Advance 500mg": {
     "src": "commons",
-    "q": "paracetamol tablets"
+    "q": "paracetamol tablets",
+    "pick": 1
   },
   "Azithral 500 Tablet": {
     "src": "commons",
@@ -322,7 +325,8 @@
   },
   "Digene Gel Mint 200ml": {
     "src": "commons",
-    "q": "antacid"
+    "q": "antacid",
+    "pick": 0
   },
   "Glycomet GP 1": {
     "src": "commons",
@@ -351,7 +355,8 @@
   },
   "Allegra 120mg": {
     "src": "commons",
-    "q": "antihistamine tablets"
+    "q": "antihistamine tablets",
+    "pick": 0
   },
   "Benadryl Cough Syrup 150ml": {
     "src": "commons",
@@ -375,11 +380,13 @@
   },
   "Revital H Capsule 30s": {
     "src": "commons",
-    "q": "multivitamin"
+    "q": "multivitamin",
+    "pick": 0
   },
   "Volini Spray 60g": {
     "src": "commons",
-    "q": "aerosol spray can"
+    "q": "aerosol spray can",
+    "pick": 3
   },
   "Moov Cream 50g": {
     "src": "commons",
@@ -393,11 +400,13 @@
   },
   "Dettol Antiseptic 250ml": {
     "src": "commons",
-    "q": "antiseptic liquid"
+    "q": "antiseptic liquid",
+    "pick": 1
   },
   "Accu-Chek Active Strips 50": {
     "src": "commons",
-    "q": "blood glucose meter"
+    "q": "blood glucose meter",
+    "pick": 0
   },
   "N95 Mask": {
     "src": "commons",
@@ -441,11 +450,13 @@
   },
   "Dell Inspiron 15 i5": {
     "src": "commons",
-    "q": "Dell laptop"
+    "q": "Dell laptop",
+    "pick": 0
   },
   "HP Pavilion x360": {
     "src": "commons",
-    "q": "HP laptop"
+    "q": "HP laptop",
+    "pick": 1
   },
   "MacBook Air M4": {
     "src": "commons",
@@ -454,7 +465,8 @@
   },
   "Sony WH-1000XM6": {
     "src": "commons",
-    "q": "Sony headphones"
+    "q": "Sony headphones",
+    "pick": 3
   },
   "boAt Airdopes 141": {
     "src": "commons",
@@ -498,7 +510,8 @@
   },
   "Diagnosis / Inspection Fee": {
     "src": "commons",
-    "q": "mobile phone repair"
+    "q": "mobile phone repair",
+    "pick": 3
   },
   "Screen Replacement Labour": {
     "src": "commons",
@@ -522,11 +535,13 @@
   },
   "Water Damage Cleaning": {
     "src": "commons",
-    "q": "wet smartphone"
+    "q": "wet smartphone",
+    "pick": 0
   },
   "Laptop Keyboard Replacement Labour": {
     "src": "commons",
-    "q": "laptop repair"
+    "q": "laptop repair",
+    "pick": 1
   },
   "Laptop Service & Thermal Paste": {
     "src": "commons",
@@ -535,15 +550,18 @@
   },
   "Galaxy S26 Display Assembly": {
     "src": "commons",
-    "q": "smartphone screen replacement"
+    "q": "smartphone screen replacement",
+    "pick": 0
   },
   "iPhone 17 Display Assembly": {
     "src": "commons",
-    "q": "iPhone screen repair"
+    "q": "iPhone screen repair",
+    "pick": 0
   },
   "Redmi Note 15 Pro Display": {
     "src": "commons",
-    "q": "LCD display module"
+    "q": "LCD display module",
+    "pick": 0
   },
   "Galaxy S26 Battery 4000mAh": {
     "src": "commons",
@@ -557,7 +575,8 @@
   },
   "USB-C Charging Port Flex": {
     "src": "commons",
-    "q": "flex cable"
+    "q": "flex cable",
+    "pick": 0
   },
   "Galaxy S26 Back Glass": {
     "src": "commons",
