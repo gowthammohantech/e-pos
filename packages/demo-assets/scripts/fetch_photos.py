@@ -3,6 +3,7 @@
 
   pnpm --silent --filter @elixir/demo-assets items > /tmp/items.json
   python3 scripts/fetch_photos.py candidates /tmp/items.json /tmp/cands   # review sheet.html, set "pick" in photos.json
+                                                                          # (--titles: list file titles, no previews)
   python3 scripts/fetch_photos.py build /tmp/items.json /tmp/cands        # writes public/demo/**, CREDITS.json, src/native.ts
 
 Both sources are freely licensed (CC / public domain); attribution is kept in public/demo/CREDITS.json.
@@ -135,6 +136,9 @@ def candidates(items: list[dict], out: Path) -> None:
             cache_file.write_text(json.dumps(cache, indent=1))
         cells = []
         for i, c in enumerate(cache[key]):
+            if TITLES_ONLY:
+                cells.append(f"<td>{i}: {html.escape(c['title'])}</td>")
+                continue
             thumb = out / 'thumbs' / f"{re.sub(r'[^a-z0-9]+', '-', key.lower())}-{i}.jpg"
             if not thumb.exists():
                 thumb.parent.mkdir(exist_ok=True)
@@ -181,8 +185,10 @@ def write_native(urls: list[str]) -> None:
     )
 
 
+TITLES_ONLY = '--titles' in sys.argv  # skip preview downloads (Wikimedia rate-limits shared IPs hard)
+
 if __name__ == '__main__':
-    mode, items_path, out_dir = sys.argv[1:4]
+    mode, items_path, out_dir = [a for a in sys.argv[1:] if not a.startswith('--')][:3]
     items = json.loads(Path(items_path).read_text())
     missing = [i['name'] for i in items if i['name'] not in QUERIES]
     if missing:
