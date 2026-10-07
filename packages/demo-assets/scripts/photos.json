@@ -2,7 +2,7 @@
   "_comment": "Search query per demo item. src: off = Open Food Facts pack shot ('brand-tag|product words'), commons = Wikimedia Commons search. pick = index of the chosen candidate; fit: pad letterboxes instead of cropping.",
   "Aavin Toned Milk 500ml": {
     "src": "commons",
-    "q": "milk packet India"
+    "q": "milk pouch"
   },
   "Amul Butter 100g": {
     "src": "off",
@@ -18,7 +18,7 @@
   },
   "Milky Mist Paneer 200g": {
     "src": "commons",
-    "q": "paneer cubes"
+    "q": "paneer"
   },
   "India Gate Basmati Rice": {
     "src": "commons",
@@ -26,7 +26,7 @@
   },
   "Ponni Boiled Rice": {
     "src": "commons",
-    "q": "raw rice grains heap"
+    "q": "rice grains"
   },
   "Aashirvaad Atta 5kg": {
     "src": "off",
@@ -101,16 +101,16 @@
     "q": "kurkure|masala munch"
   },
   "Colgate Strong Teeth 200g": {
-    "src": "off",
-    "q": "colgate|strong teeth"
+    "src": "commons",
+    "q": "toothpaste tube"
   },
   "Dove Cream Beauty Bar 100g": {
-    "src": "off",
-    "q": "dove|beauty bar"
+    "src": "commons",
+    "q": "bar of soap"
   },
   "Head & Shoulders 340ml": {
-    "src": "off",
-    "q": "head-shoulders|shampoo"
+    "src": "commons",
+    "q": "shampoo bottle"
   },
   "Parachute Coconut Oil 500ml": {
     "src": "off",
@@ -121,24 +121,24 @@
     "q": "dettol|handwash"
   },
   "Surf Excel Easy Wash 1kg": {
-    "src": "off",
-    "q": "surf-excel|easy wash"
+    "src": "commons",
+    "q": "laundry detergent powder"
   },
   "Vim Dishwash Bar 300g": {
-    "src": "off",
-    "q": "vim|bar"
+    "src": "commons",
+    "q": "dishwashing bar"
   },
   "Harpic Power Plus 1L": {
-    "src": "off",
-    "q": "harpic|power plus"
+    "src": "commons",
+    "q": "toilet cleaner bottle"
   },
   "Lizol Floor Cleaner 975ml": {
-    "src": "off",
-    "q": "lizol|floor"
+    "src": "commons",
+    "q": "floor cleaner bottle"
   },
   "Good Knight Gold Flash Refill": {
     "src": "commons",
-    "q": "mosquito repellent liquid vaporizer"
+    "q": "mosquito repellent"
   },
   "Tomato": {
     "src": "commons",
@@ -150,7 +150,7 @@
   },
   "Potato": {
     "src": "commons",
-    "q": "potatoes"
+    "q": "potatoes tubers"
   },
   "Banana Robusta": {
     "src": "commons",

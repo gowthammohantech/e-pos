@@ -131,9 +131,14 @@ def candidates(items: list[dict], out: Path) -> None:
     for it in items:
         q = QUERIES[it['name']]
         key = f"{q['src']}:{q['q']}"
-        if key not in cache:
-            cache[key] = (search_off if q['src'] == 'off' else search_commons)(q['q'])
-            cache_file.write_text(json.dumps(cache, indent=1))
+        if not cache.get(key):  # empty results aren't cached, so a tweaked query or retry gets another go
+            try:
+                cache[key] = (search_off if q['src'] == 'off' else search_commons)(q['q'])
+            except Exception as e:  # noqa: BLE001 — keep going; a re-run retries just the failures
+                print(f"ERR {it['name']}: {e}")
+                continue
+            if cache[key]:
+                cache_file.write_text(json.dumps(cache, indent=1))
         cells = []
         for i, c in enumerate(cache[key]):
             if TITLES_ONLY:
@@ -152,7 +157,7 @@ def candidates(items: list[dict], out: Path) -> None:
             cells.append(f'<td><img src="thumbs/{thumb.name}"><br>{i}</td>')
         pick = q.get('pick', 0)
         rows.append(f"<tr><th>{html.escape(it['name'])}<br><small>{html.escape(q['q'])} · pick {pick}</small></th>{''.join(cells) or '<td>NO RESULTS</td>'}</tr>")
-        print(f"{len(cache[key])} {it['name']}")
+        print(f"{len(cache.get(key, []))} {it['name']}")
     (out / 'sheet.html').write_text(
         '<style>body{font:12px sans-serif}th{width:180px;text-align:left}td{text-align:center}img{width:150px;height:150px;object-fit:cover}</style><table>'
         + ''.join(rows) + '</table>'
