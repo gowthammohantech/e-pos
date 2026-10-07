@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 QUERIES = {k: v for k, v in json.loads((ROOT / 'scripts' / 'photos.json').read_text()).items() if not k.startswith('_')}
-UA = 'ElixirPOS-demo-assets/0.1 (demo seed images; gowthammohantech/e-pos)'
+UA = 'ElixirPOS-demo-assets/0.1 (https://github.com/gowthammohantech/e-pos; demo seed images)'
 N = 4  # candidates per item
 SIZE = 480
 
@@ -33,7 +33,7 @@ def get(url: str, tries: int = 6) -> bytes:
     # Commons hands out thumb.wikimedia.org links; the same paths are served by upload.wikimedia.org.
     url = url.replace('://thumb.wikimedia.org/', '://upload.wikimedia.org/', 1)
     for i in range(tries):
-        time.sleep(0.6)
+        time.sleep(1.0)
         try:
             req = urllib.request.Request(url, headers={'User-Agent': UA})
             with urllib.request.urlopen(req, timeout=40) as r:
@@ -81,15 +81,19 @@ def search_commons(q: str) -> list[dict]:
 
 
 def search_off(q: str) -> list[dict]:
-    params = {'search_terms': q, 'search_simple': 1, 'action': 'process', 'json': 1, 'page_size': 20, 'fields': 'code,product_name,brands,image_front_url'}
-    data = json.loads(get('https://world.openfoodfacts.org/cgi/search.pl?' + urllib.parse.urlencode(params)))
+    """q is 'brand-tag|words': pack shots of that brand, best match on the product-name words first.
+    (OFF's full-text search answers 503 to scripts; the v2 tag filter is reliable.)"""
+    brand, _, words = q.partition('|')
+    params = {'brands_tags': brand, 'fields': 'code,product_name,brands,image_front_url', 'page_size': 100, 'sort_by': 'unique_scans_n'}
+    data = json.loads(get('https://world.openfoodfacts.org/api/v2/search?' + urllib.parse.urlencode(params)))
+    want = [w for w in words.lower().split() if w]
+    def score(p: dict) -> int:
+        name = (p.get('product_name') or '').lower()
+        return sum(w in name for w in want)
     out = []
-    for p in data.get('products', []):
-        url = p.get('image_front_url')
-        if not url:
-            continue
+    for p in sorted((p for p in data.get('products', []) if p.get('image_front_url')), key=score, reverse=True):
         out.append({
-            'thumb': re.sub(r'\.(\d+)\.jpg$', '.full.jpg', url),
+            'thumb': re.sub(r'\.(\d+)\.jpg$', '.full.jpg', p['image_front_url']),
             'source': f"https://world.openfoodfacts.org/product/{p['code']}",
             'title': f"{p.get('brands', '')} {p.get('product_name', '')}".strip(),
             'author': 'Open Food Facts contributors',
