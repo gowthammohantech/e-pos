@@ -7,7 +7,7 @@
   "Amul Butter 100g": {
     "src": "off",
     "q": "amul|butter",
-    "pick": 0
+    "pick": 3
   },
   "Amul Taaza Curd 400g": {
     "src": "off",
@@ -31,7 +31,7 @@
   "Ponni Boiled Rice": {
     "src": "commons",
     "q": "rice grains",
-    "pick": 2
+    "pick": 0
   },
   "Aashirvaad Atta 5kg": {
     "src": "off",
@@ -131,7 +131,7 @@
   "Dove Cream Beauty Bar 100g": {
     "src": "commons",
     "q": "bar of soap",
-    "pick": 2
+    "pick": 1
   },
   "Head & Shoulders 340ml": {
     "src": "commons",
@@ -151,7 +151,7 @@
   "Surf Excel Easy Wash 1kg": {
     "src": "commons",
     "q": "laundry detergent powder",
-    "pick": 0
+    "pick": 2
   },
   "Vim Dishwash Bar 300g": {
     "src": "commons",
@@ -185,8 +185,8 @@
   },
   "Potato": {
     "src": "commons",
-    "q": "potatoes market",
-    "pick": 0
+    "q": "russet potatoes",
+    "pick": 1
   },
   "Banana Robusta": {
     "src": "commons",
@@ -281,7 +281,7 @@
   "Linen Palazzo": {
     "src": "commons",
     "q": "palazzo pants",
-    "pick": 0
+    "pick": 1
   },
   "Running Sneakers": {
     "src": "commons",
@@ -291,7 +291,7 @@
   "Leather Belt": {
     "src": "commons",
     "q": "leather belt",
-    "pick": 3
+    "pick": 2
   },
   "Silk Saree": {
     "src": "commons",
@@ -431,7 +431,7 @@
   "Samsung Galaxy S26 256GB": {
     "src": "commons",
     "q": "Samsung Galaxy S24",
-    "pick": 1
+    "pick": 0
   },
   "iPhone 17 128GB": {
     "src": "commons",
@@ -456,7 +456,7 @@
   "HP Pavilion x360": {
     "src": "commons",
     "q": "HP laptop",
-    "pick": 1
+    "pick": 2
   },
   "MacBook Air M4": {
     "src": "commons",
@@ -481,7 +481,7 @@
   "LG 55\" 4K OLED TV": {
     "src": "commons",
     "q": "LG OLED TV",
-    "pick": 0
+    "pick": 2
   },
   "Samsung 43\" Crystal 4K": {
     "src": "commons",
@@ -626,7 +626,7 @@
   "Egg Bonda": {
     "src": "commons",
     "q": "bonda",
-    "pick": 2
+    "pick": 1
   },
   "Butter Chicken": {
     "src": "commons",
@@ -656,7 +656,7 @@
   "Mutton Rogan Josh": {
     "src": "commons",
     "q": "rogan josh",
-    "pick": 1
+    "pick": 0
   },
   "Wagyu Steak": {
     "src": "commons",
@@ -721,12 +721,12 @@
   "Fresh Lime Soda": {
     "src": "commons",
     "q": "lime soda",
-    "pick": 2
+    "pick": 0
   },
   "Mango Lassi": {
     "src": "commons",
     "q": "mango lassi",
-    "pick": 2
+    "pick": 3
   },
   "Cold Coffee": {
     "src": "commons",
@@ -735,8 +735,8 @@
   },
   "Mineral Water": {
     "src": "commons",
-    "q": "water bottle plastic",
-    "pick": 0
+    "q": "bisleri bottle",
+    "pick": 2
   },
   "Gulab Jamun": {
     "src": "commons",

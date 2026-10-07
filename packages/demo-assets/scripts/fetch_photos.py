@@ -104,6 +104,20 @@ def search_off(q: str) -> list[dict]:
     return out[:N]
 
 
+def fetch_rendition(url: str) -> bytes:
+    """Commons rate-limits originals and non-standard widths; small originals are fetched as a standard thumbnail step."""
+    m = re.match(r'(https://upload\.wikimedia\.org/wikipedia/commons)/([0-9a-f]/[0-9a-f]{2})/([^?]+)', url)
+    if not m:
+        return get(url)
+    for width in (500, 330, 250):
+        try:
+            return get(f'{m[1]}/thumb/{m[2]}/{m[3]}/{width}px-{m[3]}', tries=2)
+        except urllib.error.HTTPError as e:
+            if e.code not in (400, 404, 429):  # 400/404: original narrower than this step
+                raise
+    return get(url)
+
+
 def square(raw: bytes) -> Image.Image:
     im = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert('RGB')
     return ImageOps.fit(im, (SIZE, SIZE), Image.LANCZOS, centering=(0.5, 0.5))
@@ -177,7 +191,7 @@ def build(items: list[dict], out: Path) -> None:
         meta = {k: c[k] for k in ('title', 'author', 'license', 'licenseUrl', 'source')}
         if not (dest.exists() and old.get(it['url']) == meta):  # unchanged picks aren't re-downloaded
             try:
-                raw = get(c['thumb'])
+                raw = fetch_rendition(c['thumb'])
             except Exception as e:  # noqa: BLE001 — report and continue; a re-run fetches the rest
                 print(f"ERR {it['name']}: {e}")
                 continue
