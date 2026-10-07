@@ -10,8 +10,10 @@ import { buildParties } from './parties';
 import { buildRestaurantRuntime, floors, menuItems, modifierGroups, restaurantCategories, stations } from './restaurant';
 import { buildHistory } from './history';
 import { buildRepairDesk } from './repair';
+import { attachDemoImages } from './images';
 
 export { TENANT_IDS, DEMO_TENANT_IDS };
+export { demoMenuImage, demoProductImage } from './images';
 
 export interface SeedData {
   version: number;
@@ -61,7 +63,7 @@ export interface SeedData {
 }
 
 /** Bump when seed shape changes; local-store reseeds when the stored version differs. */
-export const SEED_VERSION = 5;
+export const SEED_VERSION = 6;
 
 let cached: SeedData | null = null;
 
@@ -78,6 +80,7 @@ export function buildSeed(): SeedData {
   sequences['KOT|global'] = runtime.nextKotSeq;
   sequences['ORD|global'] = runtime.nextOrderSeq;
   const repair = buildRepairDesk(parties.customers);
+  attachDemoImages([...catalog.products, ...repair.products], menuItems);
   Object.assign(sequences, repair.sequences);
   cached = {
     version: SEED_VERSION,

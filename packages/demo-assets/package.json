@@ -1,0 +1,19 @@
+{
+  "name": "@elixir/demo-assets",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./native": "./src/native.ts",
+    "./public/*": "./public/*"
+  },
+  "scripts": {
+    "generate": "vite-node scripts/generate.ts"
+  },
+  "devDependencies": {
+    "@elixir/contracts": "workspace:*",
+    "@elixir/mock-data": "workspace:*",
+    "playwright": "^1.63.0",
+    "vite-node": "^3.2.4"
+  }
+}
