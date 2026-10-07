@@ -5,7 +5,7 @@ import { discountNeedsApproval, documentNumber, expiryHealth, pickBatchFefo } fr
 import { daysUntil, money, monthYear, qty as fmtQty } from '@elixir/format';
 import { batchesFor, completeSale, deleteHeldCart, holdCart, onHand, productByBarcode, searchProducts } from '@elixir/local-store';
 import { useLive, useMeta } from '@elixir/local-store/react';
-import { ApprovalDialog, Badge, BarcodeInput, Button, ConfirmDialog, EmptyState, Icon, IconButton, InlineAlert, Kbd, Modal, QuantityStepper, Segmented, TextField, useToast, cx } from '@elixir/ui';
+import { ApprovalDialog, Badge, BarcodeInput, Button, ConfirmDialog, EmptyState, Icon, IconButton, InlineAlert, Kbd, Modal, QuantityStepper, Segmented, TextField, Thumb, useToast, cx } from '@elixir/ui';
 import { usePos, useSession } from '../lib/pos';
 import { evaluateCart, useCart, type CartLine } from '../lib/cart';
 import { managerVerifier, originOf, recordApproval } from '../lib/ops';
@@ -525,6 +525,7 @@ function SearchResults({ results, hi, onHover, onPick }: { results: Product[]; h
         const batch = p.batchTracked ? pickBatchFefo(batchesFor(device, p.id), (b) => onHand(device, s.store.id, p.id, b)) : undefined;
         return (
           <button key={p.id} type="button" role="option" aria-selected={i === hi} className={cx('bill__opt', i === hi && 'is-hi')} onMouseEnter={() => onHover(i)} onMouseDown={(e) => { e.preventDefault(); onPick(p); }}>
+            <Thumb src={p.imageUrl} name={p.name} color={device.get('categories', p.categoryId)?.color} size={36} />
             <div className="bill__opt-main">
               <div className="ex-row" style={{ gap: 6 }}>
                 <b className="ex-truncate">{p.name}</b>

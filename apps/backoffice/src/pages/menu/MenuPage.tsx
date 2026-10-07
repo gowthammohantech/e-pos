@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { FoodType, MenuItem } from '@elixir/contracts';
 import { uid } from '@elixir/domain';
-import { Badge, Button, Card, CategoryChips, Checkbox, DataTable, Drawer, EmptyState, FoodMark, KpiCard, SearchInput, Segmented, Select, Switch, TextField, Textarea, useToast, type Column } from '@elixir/ui';
+import { Badge, Button, Card, CategoryChips, Checkbox, DataTable, Drawer, EmptyState, FoodMark, ImageInput, KpiCard, SearchInput, Segmented, Select, Switch, TextField, Textarea, Thumb, useToast, type Column } from '@elixir/ui';
 import { useLive } from '@elixir/local-store/react';
 import { money, number, paiseToRupeesInput, rupeesToPaise } from '@elixir/format';
 import { KpiRow, PageFrame, useFirstPaint } from '../../components/common';
@@ -43,9 +43,9 @@ export function MenuPage() {
       sortable: true,
       render: (m) => (
         <div className="ex-row" style={{ gap: 10 }}>
-          <FoodMark type={m.foodType} />
+          <Thumb src={m.imageUrl} name={m.name} color={data.cats.find((c) => c.id === m.categoryId)?.color} size={40} />
           <div style={{ minWidth: 0 }}>
-            <div className="bo-cell-main">{m.name} {m.popular ? <Badge tone="info" icon="Star">Popular</Badge> : null}</div>
+            <div className="bo-cell-main"><FoodMark type={m.foodType} /> {m.name} {m.popular ? <Badge tone="info" icon="Star">Popular</Badge> : null}</div>
             <div className="bo-cell-sub ex-truncate" style={{ maxWidth: 360 }}>{m.description}</div>
           </div>
         </div>
@@ -118,6 +118,7 @@ function MenuItemDrawer({ item, onClose, cats, stations, groups }: { item?: Menu
     availableTo: item?.availableTo ?? '',
     available: item?.available ?? true,
     popular: !!item?.popular,
+    imageUrl: item?.imageUrl,
   }));
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
@@ -135,7 +136,7 @@ function MenuItemDrawer({ item, onClose, cats, stations, groups }: { item?: Menu
     const m: MenuItem = {
       ...(item ?? { id: `mi-${uid().slice(-8)}`, tenantId: s.tenant.id, taxRateId: 'gst5' }),
       name: f.name.trim(), description: f.description || undefined, categoryId: f.categoryId, pricePaise: rupeesToPaise(f.price), foodType: f.foodType, stationId: f.stationId, modifierGroupIds: f.modifierGroupIds, prepMinutes: Number(f.prepMinutes) || 10,
-      availableFrom: f.availableFrom || undefined, availableTo: f.availableTo || undefined, available: f.available, popular: f.popular || undefined,
+      availableFrom: f.availableFrom || undefined, availableTo: f.availableTo || undefined, available: f.available, popular: f.popular || undefined, imageUrl: f.imageUrl || undefined,
     } as MenuItem;
     await saveMaster(cloud, { tenantId: s.tenant.id, collection: 'menuItems', entity: m, summary: item ? (item.pricePaise !== m.pricePaise ? `Menu price ${m.name}: ${money(item.pricePaise)} → ${money(m.pricePaise)}` : `Menu item ${m.name} updated`) : `Menu item ${m.name} added`, actorId: s.user.id, action: item ? 'menu.updated' : 'menu.created', entityName: 'menu_item', before: item });
     setBusy(false);
@@ -148,6 +149,7 @@ function MenuItemDrawer({ item, onClose, cats, stations, groups }: { item?: Menu
       <div className="ex-stack" style={{ gap: 14 }}>
         <TextField label="Dish name" required value={f.name} onChange={(e) => set('name', e.target.value)} error={errors.name} />
         <Textarea label="Description" rows={2} value={f.description} onChange={(e) => set('description', e.target.value)} hint="Shown on the waiter app and QR menu" />
+        <ImageInput label="Photo" value={f.imageUrl} onChange={(v) => set('imageUrl', v)} name={f.name} hint="Shown on POS menu cards and the waiter app" />
         <div className="bo-form-grid bo-form-grid--2">
           <Select label="Category" value={f.categoryId} onChange={(e) => set('categoryId', e.target.value)} options={cats.map((c) => ({ value: c.id, label: c.name }))} />
           <TextField label="Price (before GST)" required prefix="₹" inputMode="decimal" value={f.price} onChange={(e) => set('price', e.target.value)} error={errors.price} hint="Restaurant GST 5% applied on bill" />

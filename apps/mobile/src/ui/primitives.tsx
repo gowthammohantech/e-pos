@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, TextInput, View, type StyleProp, type ViewStyle } from 'react-native';
+import { ActivityIndicator, Image, Pressable, ScrollView, TextInput, View, type ImageSourcePropType, type StyleProp, type ViewStyle } from 'react-native';
+import { demoImages } from '@elixir/demo-assets/native';
 import type { FoodType } from '@elixir/contracts';
 import type { StatusMeta, Tone } from '@elixir/domain';
 import { useTheme } from '../lib/theme';
@@ -436,6 +437,35 @@ export function KeyValue({ label, value, strong, num = true }: { label: string; 
       <T v={strong ? 'bodyStrong' : 'body'} c={strong ? 'primary' : 'secondary'} style={{ flex: 1 }}>{label}</T>
       <T v={strong ? 'h3' : 'body'} num={num}>{value}</T>
     </Row>
+  );
+}
+
+/** Bundled demo photos resolve through Metro; anything else must be a URL or data URI. */
+function imageSource(src?: string): ImageSourcePropType | undefined {
+  if (!src) return undefined;
+  if (demoImages[src] !== undefined) return demoImages[src];
+  return /^(?:https?:|data:|file:)/.test(src) ? { uri: src } : undefined;
+}
+
+/** Product/menu photo with an initials-on-tint fallback (no image, or it fails to load). */
+export function Thumb({ src, name, color, size = 48, style }: { src?: string; name: string; color?: string; size?: number | '100%'; style?: StyleProp<ViewStyle> }) {
+  const t = useTheme();
+  const [failed, setFailed] = useState<string>();
+  const source = imageSource(src);
+  const box: ViewStyle = { width: size, height: size === '100%' ? undefined : size, aspectRatio: size === '100%' ? 16 / 9 : undefined, borderRadius: t.radius.md, overflow: 'hidden', backgroundColor: t.c.surface.sunken, alignItems: 'center', justifyContent: 'center' };
+  if (source && failed !== src) {
+    return (
+      <View style={[box, style]}>
+        <Image source={source} onError={() => setFailed(src)} resizeMode="cover" style={{ width: '100%', height: '100%' }} accessibilityIgnoresInvertColors />
+      </View>
+    );
+  }
+  const ini = name.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]!.toUpperCase()).join('');
+  return (
+    <View style={[box, style]}>
+      {color ? <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: color, opacity: 0.14 }} /> : null}
+      <T v={typeof size === 'number' && size < 48 ? 'label' : 'h2'} c="secondary">{ini}</T>
+    </View>
   );
 }
 

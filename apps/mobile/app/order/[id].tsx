@@ -9,7 +9,7 @@ import { useApp, useSession } from '../../src/lib/app';
 import { askBill, requestVoid, saveDraft, send, type VoidApproval } from '../../src/lib/actions';
 import { useTheme } from '../../src/lib/theme';
 import {
-  Badge, Button, Card, Chip, ChipRow, Divider, EmptyState, FoodMark, Header, Icon, InlineAlert, KeyValue, OfflinePill, Row, Screen, SearchField, Segmented, Sheet, StatusBadge, Stepper, T,
+  Badge, Button, Card, Chip, ChipRow, Divider, EmptyState, FoodMark, Header, Icon, InlineAlert, KeyValue, OfflinePill, Row, Screen, SearchField, Segmented, Sheet, StatusBadge, Stepper, T, Thumb,
   TextArea, useToast,
 } from '../../src/ui';
 
@@ -189,7 +189,7 @@ export default function OrderScreen() {
           keyExtractor={(m) => m.id}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: 24, maxWidth: 720, width: '100%', alignSelf: 'center' }}
-          ItemSeparatorComponent={() => <Divider inset={44} />}
+          ItemSeparatorComponent={() => <Divider inset={84} />}
           ListEmptyComponent={<EmptyState icon="Search" title="No dishes match" body="Try another name or category." />}
           renderItem={({ item: m }) => {
             const inOrder = qtyInOrder(m);
@@ -203,11 +203,10 @@ export default function OrderScreen() {
                 onPress={() => (hasMods ? setPicking(m) : void quickQty(m, 1))}
                 style={({ pressed }) => ({ flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingVertical: 12, minHeight: 72, alignItems: 'center', backgroundColor: pressed ? t.c.surface.selected : t.c.surface.primary, opacity: m.available ? 1 : 0.55 })}
               >
-                <View style={{ paddingTop: 2, alignSelf: 'flex-start' }}>
-                  <FoodMark type={m.foodType} size={16} />
-                </View>
+                <Thumb src={m.imageUrl} name={m.name} size={56} />
                 <View style={{ flex: 1, gap: 2 }}>
                   <Row gap={6}>
+                    <FoodMark type={m.foodType} size={14} />
                     <T v="bodyStrong" lines={1} style={{ flexShrink: 1 }}>{m.name}</T>
                     {m.popular ? <Icon name="Star" size={12} color={t.c.status.warning} /> : null}
                   </Row>

@@ -247,6 +247,14 @@ p { margin: 0; }
 .ex-avatar { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--action-primary); flex-shrink: 0; }
 .ex-avatar--lg { width: 48px; height: 48px; font-size: 16px; }
 .ex-avatar--xl { width: 64px; height: 64px; font-size: 22px; }
+.ex-thumb { position: relative; display: inline-grid; place-items: center; flex-shrink: 0; overflow: hidden; border-radius: var(--radius-sm); background: var(--surface-sunken); color: var(--text-secondary); font-weight: 800; letter-spacing: .02em; }
+.ex-thumb--fill { width: 100%; height: 100%; border-radius: 0; font-size: 22px; }
+.ex-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ex-thumb i { position: absolute; inset: 0; opacity: .14; }
+.ex-thumb span { position: relative; }
+.ex-imginput { display: flex; align-items: center; gap: 12px; }
+.ex-imginput .ex-thumb { border: 1px solid var(--border-default); border-radius: var(--radius-md); }
+.ex-imginput__actions { display: flex; flex-wrap: wrap; gap: 6px; }
 
 /* ───────────────────────── Feedback ───────────────────────── */
 .ex-alert { display: flex; gap: 12px; padding: 12px 14px; border-radius: var(--radius-md); border: 1px solid; font-size: var(--fs-sm); align-items: flex-start; }

@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@elixir/ui/styles.css';
-import { applyTheme, ToastProvider } from '@elixir/ui';
+import { applyTheme, setImageBase, ToastProvider } from '@elixir/ui';
 import { ElixirDataProvider } from '@elixir/app-kit';
 import { App } from './App';
 
 applyTheme();
+setImageBase(import.meta.env.BASE_URL);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

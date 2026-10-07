@@ -1,0 +1,186 @@
+#!/usr/bin/env python3
+"""Source real photos for the demo seed from Wikimedia Commons and Open Food Facts.
+
+  pnpm --silent --filter @elixir/demo-assets items > /tmp/items.json
+  python3 scripts/fetch_photos.py candidates /tmp/items.json /tmp/cands   # review sheet.html, set "pick" in photos.json
+  python3 scripts/fetch_photos.py build /tmp/items.json /tmp/cands        # writes public/demo/**, CREDITS.json, src/native.ts
+
+Both sources are freely licensed (CC / public domain); attribution is kept in public/demo/CREDITS.json.
+Requires Pillow with WebP support.
+"""
+import html
+import io
+import json
+import re
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+from PIL import Image, ImageOps
+
+ROOT = Path(__file__).resolve().parent.parent
+QUERIES = {k: v for k, v in json.loads((ROOT / 'scripts' / 'photos.json').read_text()).items() if not k.startswith('_')}
+UA = 'ElixirPOS-demo-assets/0.1 (demo seed images; gowthammohantech/e-pos)'
+N = 4  # candidates per item
+SIZE = 480
+
+
+def get(url: str, tries: int = 6) -> bytes:
+    """GET with a polite delay (Wikimedia rate-limits bursts) and backoff on 429/5xx."""
+    # Commons hands out thumb.wikimedia.org links; the same paths are served by upload.wikimedia.org.
+    url = url.replace('://thumb.wikimedia.org/', '://upload.wikimedia.org/', 1)
+    for i in range(tries):
+        time.sleep(0.6)
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': UA})
+            with urllib.request.urlopen(req, timeout=40) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if i == tries - 1 or e.code not in (429, 500, 502, 503, 504):
+                raise
+            wait = float(e.headers.get('Retry-After') or 0) or 5 * 2 ** i
+            print(f'  {e.code}, retrying in {min(wait, 30):.0f}s', file=sys.stderr)
+            time.sleep(min(wait, 30))
+        except OSError:
+            if i == tries - 1:
+                raise
+            time.sleep(2 ** i)
+    raise RuntimeError('unreachable')
+
+
+def strip_tags(s: str) -> str:
+    return html.unescape(re.sub(r'<[^>]+>', '', s or '')).strip()
+
+
+def search_commons(q: str) -> list[dict]:
+    params = {
+        'action': 'query', 'format': 'json', 'generator': 'search', 'gsrnamespace': 6,
+        'gsrsearch': f'{q} filetype:bitmap', 'gsrlimit': 12,
+        'prop': 'imageinfo', 'iiprop': 'url|extmetadata|size|mime', 'iiurlwidth': 800,
+    }
+    data = json.loads(get('https://commons.wikimedia.org/w/api.php?' + urllib.parse.urlencode(params)))
+    pages = sorted((data.get('query') or {}).get('pages', {}).values(), key=lambda p: p.get('index', 0))
+    out = []
+    for p in pages:
+        ii = (p.get('imageinfo') or [{}])[0]
+        if ii.get('mime') not in ('image/jpeg', 'image/png', 'image/webp') or min(ii.get('width', 0), ii.get('height', 0)) < 300:
+            continue
+        meta = ii.get('extmetadata', {})
+        out.append({
+            'thumb': ii.get('thumburl') or ii['url'],
+            'source': ii.get('descriptionurl'),
+            'title': p['title'],
+            'author': strip_tags(meta.get('Artist', {}).get('value', '')) or 'Unknown',
+            'license': meta.get('LicenseShortName', {}).get('value', ''),
+            'licenseUrl': meta.get('LicenseUrl', {}).get('value', ''),
+        })
+    return out[:N]
+
+
+def search_off(q: str) -> list[dict]:
+    params = {'search_terms': q, 'search_simple': 1, 'action': 'process', 'json': 1, 'page_size': 20, 'fields': 'code,product_name,brands,image_front_url'}
+    data = json.loads(get('https://world.openfoodfacts.org/cgi/search.pl?' + urllib.parse.urlencode(params)))
+    out = []
+    for p in data.get('products', []):
+        url = p.get('image_front_url')
+        if not url:
+            continue
+        out.append({
+            'thumb': re.sub(r'\.(\d+)\.jpg$', '.full.jpg', url),
+            'source': f"https://world.openfoodfacts.org/product/{p['code']}",
+            'title': f"{p.get('brands', '')} {p.get('product_name', '')}".strip(),
+            'author': 'Open Food Facts contributors',
+            'license': 'CC BY-SA 3.0',
+            'licenseUrl': 'https://creativecommons.org/licenses/by-sa/3.0/',
+        })
+    return out[:N]
+
+
+def square(raw: bytes) -> Image.Image:
+    im = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert('RGB')
+    return ImageOps.fit(im, (SIZE, SIZE), Image.LANCZOS, centering=(0.5, 0.5))
+
+
+def fit_pack(raw: bytes) -> Image.Image:
+    """Pack shots are tall: letterbox onto white instead of cropping the label away."""
+    im = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert('RGB')
+    im.thumbnail((SIZE - 32, SIZE - 32), Image.LANCZOS)
+    bg = Image.new('RGB', (SIZE, SIZE), 'white')
+    bg.paste(im, ((SIZE - im.width) // 2, (SIZE - im.height) // 2))
+    return bg
+
+
+def preview(url: str) -> str:
+    """Smaller rendition for the review sheet (Commons serves fixed thumbnail steps; OFF has .400.jpg)."""
+    return re.sub(r'/960px-', '/330px-', re.sub(r'\.full\.jpg$', '.400.jpg', url))
+
+
+def candidates(items: list[dict], out: Path) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    cache_file = out / 'cands.json'
+    cache = json.loads(cache_file.read_text()) if cache_file.exists() else {}
+    rows = []
+    for it in items:
+        q = QUERIES[it['name']]
+        key = f"{q['src']}:{q['q']}"
+        if key not in cache:
+            cache[key] = (search_off if q['src'] == 'off' else search_commons)(q['q'])
+            cache_file.write_text(json.dumps(cache, indent=1))
+        cells = []
+        for i, c in enumerate(cache[key]):
+            thumb = out / 'thumbs' / f"{re.sub(r'[^a-z0-9]+', '-', key.lower())}-{i}.jpg"
+            if not thumb.exists():
+                thumb.parent.mkdir(exist_ok=True)
+                try:
+                    im = Image.open(io.BytesIO(get(preview(c['thumb'])))).convert('RGB')
+                    im.thumbnail((200, 200))
+                    im.save(thumb, quality=80)
+                except Exception as e:  # noqa: BLE001
+                    print('thumb failed', it['name'], i, e, file=sys.stderr)
+                    continue
+            cells.append(f'<td><img src="thumbs/{thumb.name}"><br>{i}</td>')
+        pick = q.get('pick', 0)
+        rows.append(f"<tr><th>{html.escape(it['name'])}<br><small>{html.escape(q['q'])} · pick {pick}</small></th>{''.join(cells) or '<td>NO RESULTS</td>'}</tr>")
+        print(f"{len(cache[key])} {it['name']}")
+    (out / 'sheet.html').write_text(
+        '<style>body{font:12px sans-serif}th{width:180px;text-align:left}td{text-align:center}img{width:150px;height:150px;object-fit:cover}</style><table>'
+        + ''.join(rows) + '</table>'
+    )
+
+
+def build(items: list[dict], out: Path) -> None:
+    cache = json.loads((out / 'cands.json').read_text())
+    credits = {}
+    for it in items:
+        q = QUERIES[it['name']]
+        c = cache[f"{q['src']}:{q['q']}"][q.get('pick', 0)]
+        dest = ROOT / 'public' / it['url']
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        raw = get(c['thumb'])
+        (fit_pack(raw) if q['src'] == 'off' or q.get('fit') == 'pad' else square(raw)).save(dest, 'WEBP', quality=80, method=6)
+        credits[it['url']] = {k: c[k] for k in ('title', 'author', 'license', 'licenseUrl', 'source')}
+        print('ok', it['url'], it['name'])
+    (ROOT / 'public' / 'demo' / 'CREDITS.json').write_text(json.dumps(credits, indent=1, ensure_ascii=False) + '\n')
+    write_native(sorted(credits))
+
+
+def write_native(urls: list[str]) -> None:
+    """React Native can't resolve paths at runtime, so Metro needs one static require() per file."""
+    body = '\n'.join(f"  '{u}': require('../public/{u}')," for u in urls)
+    (ROOT / 'src').mkdir(exist_ok=True)
+    (ROOT / 'src' / 'native.ts').write_text(
+        '// Generated by scripts/fetch_photos.py — do not edit.\n'
+        'export const demoImages: Record<string, number> = {\n' + body + '\n};\n'
+    )
+
+
+if __name__ == '__main__':
+    mode, items_path, out_dir = sys.argv[1:4]
+    items = json.loads(Path(items_path).read_text())
+    missing = [i['name'] for i in items if i['name'] not in QUERIES]
+    if missing:
+        sys.exit(f'No query in photos.json for: {missing}')
+    {'candidates': candidates, 'build': build}[mode](items, Path(out_dir))

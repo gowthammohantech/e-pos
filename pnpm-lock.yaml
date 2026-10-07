@@ -115,6 +115,9 @@ importers:
       '@elixir/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@elixir/demo-assets':
+        specifier: workspace:*
+        version: link:../../packages/demo-assets
       '@elixir/domain':
         specifier: workspace:*
         version: link:../../packages/domain
@@ -349,9 +352,6 @@ importers:
       '@elixir/mock-data':
         specifier: workspace:*
         version: link:../mock-data
-      playwright:
-        specifier: ^1.63.0
-        version: 1.63.0
       vite-node:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@26.6.4)(lightningcss@1.33.0)(terser@5.51.2)(yaml@2.9.1)

@@ -245,9 +245,8 @@
 .mcard:hover:not(.is-off) { box-shadow: var(--shadow-pop); border-color: var(--border-strong); }
 .mcard.is-in { border-color: var(--action-primary); box-shadow: 0 0 0 1px var(--action-primary); }
 .mcard.is-off { cursor: not-allowed; opacity: .6; }
-.mcard__tile { height: 64px; display: flex; align-items: center; justify-content: center; position: relative; font-weight: 800; font-size: 22px; letter-spacing: .02em; color: var(--text-secondary); background: var(--surface-sunken); }
-.mcard__tile i { position: absolute; inset: 0; opacity: .14; }
-.mcard__tile .ex-food { position: absolute; top: 8px; left: 8px; }
+.mcard__tile { height: 96px; position: relative; background: var(--surface-sunken); }
+.mcard__tile .ex-food { position: absolute; top: 8px; left: 8px; background: #fff; box-shadow: 0 0 0 2px #fff; }
 .mcard__tile .ex-badge { position: absolute; top: 8px; right: 8px; }
 .mcard__body { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .mcard__name { font-weight: 650; font-size: var(--fs-sm); line-height: 17px; }
