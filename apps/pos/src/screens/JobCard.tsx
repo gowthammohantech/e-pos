@@ -106,21 +106,21 @@ function JobCardIntake() {
         <div className="ex-stack">
           <div className="ex-card pos-card-pad ex-stack">
             <div className="ex-row"><div className="pos-section-title">Customer</div><div className="ex-spacer" /><Button size="sm" icon="UserSearch" onClick={() => setPicker(true)}>Find customer</Button></div>
-            <div className="ex-row" style={{ alignItems: 'flex-start' }}>
-              <TextField label="Name" required value={name} onChange={(e) => { setName(e.target.value); setCustomer(undefined); }} wrapClassName="ex-spacer" />
-              <TextField label="Phone" required value={phone} onChange={(e) => { setPhone(e.target.value); setCustomer(undefined); }} inputMode="tel" wrapClassName="ex-spacer" />
+            <div className="pos-form-grid">
+              <TextField label="Name" required value={name} onChange={(e) => { setName(e.target.value); setCustomer(undefined); }} />
+              <TextField label="Phone" required value={phone} onChange={(e) => { setPhone(e.target.value); setCustomer(undefined); }} inputMode="tel" />
             </div>
             {customer ? <Badge tone="info" icon="UserCheck">Linked to customer account · {customer.name}</Badge> : null}
           </div>
           <div className="ex-card pos-card-pad ex-stack">
             <div className="pos-section-title">Device</div>
-            <div className="ex-row" style={{ alignItems: 'flex-start' }}>
-              <TextField label="Brand" required placeholder="Samsung" value={brand} onChange={(e) => setBrand(e.target.value)} wrapClassName="ex-spacer" />
-              <TextField label="Model" required placeholder="Galaxy S26" value={model} onChange={(e) => setModel(e.target.value)} wrapClassName="ex-spacer" />
+            <div className="pos-form-grid">
+              <TextField label="Brand" required placeholder="Samsung" value={brand} onChange={(e) => setBrand(e.target.value)} />
+              <TextField label="Model" required placeholder="Galaxy S26" value={model} onChange={(e) => setModel(e.target.value)} />
             </div>
-            <div className="ex-row" style={{ alignItems: 'flex-start' }}>
-              <TextField label="IMEI / Serial no." icon="ScanLine" value={imei} onChange={(e) => setImei(e.target.value)} wrapClassName="ex-spacer" />
-              <TextField label="Colour" value={color} onChange={(e) => setColor(e.target.value)} wrapClassName="ex-spacer" />
+            <div className="pos-form-grid">
+              <TextField label="IMEI / Serial no." icon="ScanLine" value={imei} onChange={(e) => setImei(e.target.value)} />
+              <TextField label="Colour" value={color} onChange={(e) => setColor(e.target.value)} />
             </div>
             <TextField label="Accessories received" hint="Comma separated — e.g. Charger, Back cover, SIM tray" value={accessories} onChange={(e) => setAccessories(e.target.value)} />
             <TextField label="Physical condition" placeholder="Scratches on frame, cracked back glass…" value={condition} onChange={(e) => setCondition(e.target.value)} />
