@@ -1,10 +1,28 @@
 import { useMemo, useRef, useState } from 'react';
 import type { Product } from '@elixir/contracts';
-import { SearchInput } from '@elixir/ui';
-import { searchProducts } from '@elixir/local-store';
+import { SearchInput, useBarcodeScanner, useToast } from '@elixir/ui';
+import { productByBarcode, searchProducts } from '@elixir/local-store';
 import { money } from '@elixir/format';
 import { useCloud } from '../lib/data';
 import { useSession } from '../lib/session';
+
+/**
+ * Page-level barcode scanner: a scan resolves to a product wherever the cursor is, so the code is
+ * never typed into a qty/price cell. Unknown codes raise a toast.
+ */
+export function useProductScan(onProduct: (p: Product) => void, enabled = true) {
+  const s = useSession();
+  const cloud = useCloud();
+  const toast = useToast();
+  useBarcodeScanner(
+    (code) => {
+      const p = productByBarcode(cloud, s.tenant.id, code);
+      if (p) onProduct(p);
+      else toast.warning('Barcode not found', `${code} — check the code or search by name.`);
+    },
+    { enabled },
+  );
+}
 
 /** Type-ahead product search (name, SKU, barcode, molecule, style). Enter picks the first result. */
 export function ProductPicker({ onPick, placeholder = 'Search product by name, SKU or scan barcode', exclude, autoFocus, right }: { onPick: (p: Product) => void; placeholder?: string; exclude?: string[]; autoFocus?: boolean; right?: (p: Product) => React.ReactNode }) {

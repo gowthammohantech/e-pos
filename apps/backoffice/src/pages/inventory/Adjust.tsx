@@ -7,7 +7,7 @@ import { useLive } from '@elixir/local-store/react';
 import { date, money, qty as fq } from '@elixir/format';
 import { roleByCode } from '@elixir/domain';
 import { FormSection, PageFrame } from '../../components/common';
-import { ProductPicker } from '../../components/ProductPicker';
+import { ProductPicker, useProductScan } from '../../components/ProductPicker';
 import { useCloud } from '../../lib/data';
 import { onHandIn } from '../../lib/stock';
 import { ADJ_REASON_LABEL, postAdjustment } from '../../lib/ops';
@@ -31,6 +31,9 @@ export function AdjustPage() {
   const [approval, setApproval] = useState(false);
   const [busy, setBusy] = useState(false);
   const canApprove = s.can('approvals.act');
+  // Single-product form: a scan replaces the selected product (works even after one is chosen).
+  const pickProduct = (p: Product) => { setProduct(p); setBatchId(''); setErrors({}); };
+  useProductScan(pickProduct);
 
   const batches = product?.batchTracked ? batchesFor(cloud, product.id) : [];
   const onHand = useLive(cloud, ['stockMovements'], () => (product ? onHandIn(cloud, [store], product.id, batchId || undefined) : 0), [product?.id, store, batchId]);
@@ -82,7 +85,7 @@ export function AdjustPage() {
                   <IconButton size="sm" icon="X" label="Change product" onClick={() => { setProduct(undefined); setBatchId(''); }} />
                 </div>
               ) : (
-                <ProductPicker onPick={(p) => { setProduct(p); setBatchId(''); setErrors({}); }} autoFocus right={(p) => `${fq(onHandIn(cloud, [store], p.id))} ${p.unit}`} />
+                <ProductPicker onPick={pickProduct} autoFocus right={(p) => `${fq(onHandIn(cloud, [store], p.id))} ${p.unit}`} />
               )}
               {errors.product ? <span className="ex-error" role="alert">{errors.product}</span> : null}
             </div>

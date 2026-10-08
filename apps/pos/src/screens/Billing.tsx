@@ -5,7 +5,7 @@ import { discountNeedsApproval, documentNumber, expiryHealth, pickBatchFefo } fr
 import { daysUntil, money, monthYear, qty as fmtQty } from '@elixir/format';
 import { batchesFor, completeSale, deleteHeldCart, holdCart, onHand, productByBarcode, searchProducts } from '@elixir/local-store';
 import { useLive, useMeta } from '@elixir/local-store/react';
-import { ApprovalDialog, Badge, BarcodeInput, Button, ConfirmDialog, EmptyState, Icon, IconButton, InlineAlert, Kbd, Modal, QuantityStepper, Segmented, TextField, Thumb, useToast, cx } from '@elixir/ui';
+import { ApprovalDialog, Badge, BarcodeInput, Button, ConfirmDialog, EmptyState, Icon, IconButton, InlineAlert, Kbd, Modal, QuantityStepper, Segmented, TextField, Thumb, useBarcodeScanner, useToast, cx } from '@elixir/ui';
 import { usePos, useSession } from '../lib/pos';
 import { evaluateCart, useCart, type CartLine } from '../lib/cart';
 import { managerVerifier, originOf, recordApproval } from '../lib/ops';
@@ -153,6 +153,19 @@ function Billing() {
     setNotFound(code);
     setQuery('');
   };
+
+  // Hardware scans add the product wherever the cursor is (qty, discount…) — never typed into that field.
+  useBarcodeScanner(
+    (code) => {
+      const exact = productByBarcode(device, s.tenant.id, code);
+      if (exact && !exact.isService) return addProduct(exact);
+      setQuery('');
+      setDropdown(false);
+      setNotFound(code);
+      focusScan();
+    },
+    { enabled: !anyOverlay },
+  );
 
   // ── Line operations ──
   const sel = cart.selected >= 0 ? cart.lines[cart.selected] : undefined;

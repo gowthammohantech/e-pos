@@ -6,7 +6,7 @@ import { Badge, Button, Card, CardHeader, ConfirmDialog, DataTable, DescriptionL
 import { useEntity, useLive } from '@elixir/local-store/react';
 import { date, dateTime, money, paiseToRupeesInput, rupeesToPaise, qty as fq } from '@elixir/format';
 import { NotFound, PageFrame } from '../../components/common';
-import { ProductPicker } from '../../components/ProductPicker';
+import { ProductPicker, useProductScan } from '../../components/ProductPicker';
 import { addDays, today, useCloud, useLookups, userName } from '../../lib/data';
 import { cancelDraftPurchase, lineNet, peekDoc, postPurchase, postPurchaseReturn, purchaseTotals, savePurchaseDraft } from '../../lib/ops';
 import { useSession } from '../../lib/session';
@@ -122,12 +122,20 @@ function PurchaseEntry({ draft }: { draft?: Purchase }) {
     nav(`/purchase/${p.id}`, { replace: true });
   };
 
-  const add = (pid: string) => {
+  /** Manual pick appends and jumps to Qty. A scan bumps qty of an existing (non-batch) line, else appends qty 1. */
+  const add = (pid: string, scanned = false) => {
     const p = L.products.get(pid)!;
     const tax = L.taxRates.get(p.taxRateId)?.ratePct ?? 0;
-    setLines((ls) => [...ls, { key: uid(), productId: p.id, name: p.name, unit: p.unit, batchTracked: !!p.batchTracked, batchCode: '', expiryDate: '', qty: '', freeQty: '', cost: paiseToRupeesInput(p.costPaise), mrp: paiseToRupeesInput(p.mrpPaise), taxRatePct: tax, discountPct: '' }]);
-    setTimeout(() => document.querySelector<HTMLInputElement>('.bo-doc-grid tbody tr:last-child input[data-f="qty"]')?.focus(), 30);
+    const same = scanned && !p.batchTracked ? lines.find((l) => l.productId === p.id) : undefined;
+    if (same) {
+      upd(same.key, { qty: String((Number(same.qty) || 0) + 1) });
+      return;
+    }
+    setLines((ls) => [...ls, { key: uid(), productId: p.id, name: p.name, unit: p.unit, batchTracked: !!p.batchTracked, batchCode: '', expiryDate: '', qty: scanned ? '1' : '', freeQty: '', cost: paiseToRupeesInput(p.costPaise), mrp: paiseToRupeesInput(p.mrpPaise), taxRatePct: tax, discountPct: '' }]);
+    const focus = scanned ? (p.batchTracked ? 'batchCode' : undefined) : 'qty';
+    if (focus) setTimeout(() => document.querySelector<HTMLInputElement>(`.bo-doc-grid tbody tr:last-child input[data-f="${focus}"]`)?.focus(), 30);
   };
+  useProductScan((p) => add(p.id, true), canPost);
   const upd = (key: string, patch: Partial<EditLine>) => setLines((ls) => ls.map((l) => (l.key === key ? { ...l, ...patch } : l)));
   const showErr = (i: number, f: keyof EditLine) => (tried ? lineErrors[i]?.[f] : undefined);
   const cell = (l: EditLine, i: number, f: keyof EditLine, props: { num?: boolean; type?: string; placeholder?: string } = {}) => (

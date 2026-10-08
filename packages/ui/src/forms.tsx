@@ -100,7 +100,7 @@ export const SearchInput = forwardRef<HTMLInputElement, TextFieldProps & { onCle
  * Keeps focus by default so billing never needs the mouse (§22, §53).
  */
 export const BarcodeInput = forwardRef<HTMLInputElement, Omit<TextFieldProps, 'onChange'> & { value: string; onChange: (v: string) => void; onScan: (code: string) => void }>(function BarcodeInput(
-  { value, onChange, onScan, size = 'lg', placeholder = 'Scan barcode or search products…', ...rest },
+  { value, onChange, onScan, onKeyDown, size = 'lg', placeholder = 'Scan barcode or search products…', ...rest },
   ref,
 ) {
   return (
@@ -118,7 +118,7 @@ export const BarcodeInput = forwardRef<HTMLInputElement, Omit<TextFieldProps, 'o
           e.preventDefault();
           onScan(value.trim());
         }
-        rest.onKeyDown?.(e);
+        onKeyDown?.(e);
       }}
       {...rest}
     />

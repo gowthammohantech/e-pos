@@ -6,7 +6,7 @@ import { batchesFor } from '@elixir/local-store';
 import { useLive } from '@elixir/local-store/react';
 import { date, qty as fq } from '@elixir/format';
 import { NotAvailable, PageFrame } from '../../components/common';
-import { ProductPicker } from '../../components/ProductPicker';
+import { ProductPicker, useProductScan } from '../../components/ProductPicker';
 import { useCloud } from '../../lib/data';
 import { onHandIn } from '../../lib/stock';
 import { postTransfer } from '../../lib/ops';
@@ -28,6 +28,12 @@ export function TransferPage() {
   const [busy, setBusy] = useState(false);
   const [tried, setTried] = useState(false);
   useLive(cloud, ['stockMovements'], () => 0);
+  // Scan: bump qty of a non-batch line already listed, else append with qty 1.
+  useProductScan((p) => {
+    const i = p.batchTracked ? -1 : lines.findIndex((l) => l.product.id === p.id);
+    if (i >= 0) setLines(lines.map((l, j) => (j === i ? { ...l, qty: String((Number(l.qty) || 0) + 1) } : l)));
+    else setLines([...lines, { product: p, batchId: '', qty: '1' }]);
+  });
 
   if (!s.has('multi-store') || s.stores.length < 2) return <NotAvailable module="Stock transfer" />;
 

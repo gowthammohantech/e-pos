@@ -11,7 +11,8 @@
     "./assets/*": "./src/assets/*"
   },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
   },
   "dependencies": {
     "@elixir/tokens": "workspace:*",

@@ -4,6 +4,7 @@ import { Badge, Button, Card, CardHeader, ConfirmDialog, DataTable, KpiCard, Sea
 import { useLive } from '@elixir/local-store/react';
 import { money, number, qty as fq } from '@elixir/format';
 import { KpiRow, PageFrame } from '../../components/common';
+import { useProductScan } from '../../components/ProductPicker';
 import { includesQ, useCloud, useLookups, useTenantProducts } from '../../lib/data';
 import { onHandIn } from '../../lib/stock';
 import { postStockTake } from '../../lib/ops';
@@ -32,6 +33,13 @@ export function StockTakePage() {
     const variance = counted === undefined || !isFinite(counted) ? undefined : Math.round((counted - r.system) * 1000) / 1000;
     return { ...r, counted, variance };
   }).filter((r) => includesQ(q, r.p.name, r.p.sku, r.p.barcode, r.p.rack) && (show === 'all' || (show === 'variance' ? !!r.variance : r.counted === undefined))), [sheet, counts, q, show]);
+  // A scan replaces the search with that product and jumps to its Counted cell.
+  useProductScan((p) => {
+    if (!sheet.some((r) => r.p.id === p.id)) return toast.warning(`${p.name} is not on this count sheet`, 'Switch the category filter to count it.');
+    setQ(p.barcode);
+    setShow('all');
+    setTimeout(() => document.querySelector<HTMLInputElement>(`.bo-doc-grid input[data-pid="${p.id}"]`)?.focus(), 30);
+  });
   const counted = sheet.filter((r) => counts[r.p.id] !== undefined && counts[r.p.id] !== '');
   const withVar = counted.map((r) => ({ r, v: Math.round((Number(counts[r.p.id]) - r.system) * 1000) / 1000 })).filter((x) => x.v !== 0 && isFinite(x.v));
   const value = withVar.reduce((a, x) => a + Math.round(x.v * x.r.p.costPaise), 0);
@@ -72,7 +80,7 @@ export function StockTakePage() {
               { key: 'rack', header: 'Rack', render: (r) => <span className="num muted">{r.p.rack ?? '—'}</span> },
               { key: 'p', header: 'Product', render: (r) => <div><div className="bo-cell-main">{r.p.name}</div><div className="bo-cell-sub num">{r.p.sku}</div></div> },
               { key: 'sys', header: 'System qty', align: 'right', render: (r) => fq(r.system, r.p.decimalQty) },
-              { key: 'cnt', header: 'Counted', align: 'right', width: 130, render: (r) => <input className="num" inputMode="decimal" aria-label={`Count for ${r.p.name}`} value={counts[r.p.id] ?? ''} placeholder="—" onChange={(e) => setCounts({ ...counts, [r.p.id]: e.target.value })} /> },
+              { key: 'cnt', header: 'Counted', align: 'right', width: 130, render: (r) => <input className="num" inputMode="decimal" data-pid={r.p.id} aria-label={`Count for ${r.p.name}`} value={counts[r.p.id] ?? ''} placeholder="—" onChange={(e) => setCounts({ ...counts, [r.p.id]: e.target.value })} /> },
               { key: 'var', header: 'Variance', align: 'right', render: (r) => (r.variance === undefined ? <span className="muted">—</span> : r.variance === 0 ? <Badge tone="success" icon="Check">Match</Badge> : <b className={r.variance < 0 ? 'bo-neg' : 'bo-pos'}>{r.variance > 0 ? '+' : ''}{fq(r.variance)}</b>) },
               { key: 'val', header: 'Value', align: 'right', render: (r) => (r.variance ? money(Math.round(r.variance * r.p.costPaise), { signed: true }) : '') },
             ]}
