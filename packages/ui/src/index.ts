@@ -7,3 +7,4 @@ export * from './charts';
 export * from './shell';
 export * from './brand';
 export * from './theme';
+export * from './images';

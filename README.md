@@ -76,6 +76,7 @@ packages/
   domain/           pure logic: GST, cart/MRP cap, stock ledger, shifts, capabilities, navigation, KOT, status vocabulary
   format/           INR / date / timer formatting
   mock-data/        deterministic seed for 14 tenants
+  demo-assets/      demo product and menu photos (Wikimedia Commons / Open Food Facts, credits in public/demo/CREDITS.json)
   local-store/      durable-first local DB, transactional commands + outbox, sync engine, selectors, React hooks
   ui/               web component library (shell, forms, tables, charts, approval, sync indicator…)
   app-kit/          data provider + "Restoring local workspace" boot screen

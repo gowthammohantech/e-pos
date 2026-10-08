@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import type { MenuItem, ModifierGroup, OrderLine, OrderType, RestaurantOrder, SelectedModifier } from '@elixir/contracts';
 import { discountNeedsApproval, menuItemUnitPrice, ORDER_STATUS, orderLineTotal, orderTotals, uid, validateModifiers } from '@elixir/domain';
-import { elapsed, initials, money } from '@elixir/format';
+import { elapsed, money } from '@elixir/format';
 import { createOrder, requestBill, saveOrder, sendKot, settleOrder, voidOrderLine } from '@elixir/local-store';
 import { useLive, useNow } from '@elixir/local-store/react';
-import { ApprovalDialog, Badge, Button, CategoryChips, Checkbox, ConfirmDialog, EmptyState, FoodMark, Icon, IconButton, InlineAlert, Modal, QuantityStepper, SearchInput, Segmented, StatusBadge, TextField, Textarea, useToast, cx } from '@elixir/ui';
+import { ApprovalDialog, Badge, Button, CategoryChips, Checkbox, ConfirmDialog, EmptyState, FoodMark, Icon, IconButton, InlineAlert, Modal, QuantityStepper, SearchInput, Segmented, StatusBadge, TextField, Textarea, Thumb, useToast, cx } from '@elixir/ui';
 import { usePos, useSession } from '../lib/pos';
 import { managerVerifier, originOf, recordApproval } from '../lib/ops';
 import { PaymentModal } from '../components/PaymentModal';
@@ -179,10 +179,9 @@ function OrderWorkspace({ orderId }: { orderId: string }) {
             return (
               <div key={m.id} role="button" tabIndex={0} className={cx('mcard', n > 0 && 'is-in', !av.ok && 'is-off')} onClick={() => tapItem(m)} onKeyDown={(e) => e.key === 'Enter' && tapItem(m)} aria-label={`${m.name} ${money(m.pricePaise)}${av.ok ? '' : ` — ${av.why}`}`}>
                 <div className="mcard__tile">
-                  <i style={{ background: color }} />
+                  <Thumb src={m.imageUrl} name={m.name} color={color} />
                   <FoodMark type={m.foodType} />
                   {!av.ok ? <Badge tone="danger" icon="Ban">{av.why}</Badge> : m.popular ? <Badge tone="warning" icon="Star">Popular</Badge> : null}
-                  <span style={{ position: 'relative' }}>{initials(m.name)}</span>
                 </div>
                 <div className="mcard__body">
                   <div className="mcard__name">{m.name}</div>

@@ -6,7 +6,7 @@ import { useEntity, useLive } from '@elixir/local-store/react';
 import { date, dateTime, daysUntil, money, qty as fmtQty } from '@elixir/format';
 import { useApp, useSession } from '../../src/lib/app';
 import { useTheme } from '../../src/lib/theme';
-import { Badge, Card, Divider, EmptyState, Header, KeyValue, ListRow, Row, Screen, SectionTitle, T } from '../../src/ui';
+import { Badge, Card, Divider, EmptyState, Header, KeyValue, ListRow, Row, Screen, SectionTitle, T, Thumb } from '../../src/ui';
 import { HealthBadge } from '../../src/ui/stock';
 
 export default function ProductDetail() {
@@ -45,6 +45,7 @@ export default function ProductDetail() {
   return (
     <Screen header={<Header back title={p.name} subtitle={[live.brand?.name, live.category?.name].filter(Boolean).join(' · ')} />}>
       <Card>
+        <Thumb src={p.imageUrl} name={p.name} color={live.category?.color} size="100%" style={{ marginBottom: 12, maxHeight: 220 }} />
         <Row align="flex-end">
           <View style={{ flex: 1 }}>
             <T v="overline" c="muted">Selling price</T>

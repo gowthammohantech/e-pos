@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { Product, Unit, UomConversion } from '@elixir/contracts';
 import { uid } from '@elixir/domain';
-import { Badge, Button, Card, CardHeader, Checkbox, ConfirmDialog, DataTable, EmptyState, IconButton, InlineAlert, Select, StatusBadge, Switch, TextField, useToast } from '@elixir/ui';
+import { Badge, Button, Card, CardHeader, Checkbox, ConfirmDialog, DataTable, EmptyState, IconButton, ImageInput, InlineAlert, Select, StatusBadge, Switch, TextField, useToast } from '@elixir/ui';
 import { batchesFor } from '@elixir/local-store';
 import { useEntity, useLive } from '@elixir/local-store/react';
 import { date, daysUntil, money, paiseToRupeesInput, rupeesToPaise, qty as fq } from '@elixir/format';
@@ -52,11 +52,13 @@ interface FormState {
   serialTracked: boolean;
   isService: boolean;
   uoms: UomConversion[];
+  imageUrl?: string;
 }
 
 function toForm(p?: Product): FormState {
   return {
     name: p?.name ?? '',
+    imageUrl: p?.imageUrl,
     localName: p?.localName ?? '',
     sku: p?.sku ?? '',
     barcode: p?.barcode ?? '',
@@ -171,6 +173,7 @@ function ProductFormInner({ id }: { id?: string }) {
     const p: Product = {
       ...(existing ?? { id: `p-${s.tenant.id}-${uid().slice(-8)}`, tenantId: s.tenant.id, active: true }),
       name: f.name.trim(),
+      imageUrl: f.imageUrl || undefined,
       localName: f.localName.trim() || undefined,
       sku: f.sku.trim(),
       barcode: f.barcode.trim(),
@@ -259,6 +262,7 @@ function ProductFormInner({ id }: { id?: string }) {
             <div className="ex-stack" style={{ gap: 16 }}>
               <FormSection title="Basic" icon="Package">
                 <div className="bo-span-2"><TextField name="name" label="Product name" required value={f.name} onChange={(e) => set('name', e.target.value)} error={err('name')} /></div>
+                <div className="bo-span-2"><ImageInput label="Product photo" value={f.imageUrl} onChange={(v) => set('imageUrl', v)} name={f.name} color={L.categories.get(f.categoryId)?.color} hint="Shown in POS search and the product list" /></div>
                 <TextField name="localName" label="Local name" hint="Shown on Tamil/regional receipts" value={f.localName} onChange={(e) => set('localName', e.target.value)} />
                 <TextField name="sku" label="SKU / item code" required value={f.sku} onChange={(e) => set('sku', e.target.value.toUpperCase())} error={err('sku')} />
                 <Select name="unit" label="Base unit" value={f.unit} onChange={(e) => set('unit', e.target.value as Unit)} options={UNITS.map((u) => ({ value: u, label: u }))} />

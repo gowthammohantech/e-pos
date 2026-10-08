@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@elixir/contracts": "workspace:*",
+    "@elixir/demo-assets": "workspace:*",
     "@elixir/domain": "workspace:*",
     "@elixir/format": "workspace:*",
     "@elixir/local-store": "workspace:*",

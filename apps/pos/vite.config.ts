@@ -6,6 +6,8 @@ import react from '@vitejs/plugin-react';
 // Tauri production builds load from the bundled dist, so assets must be relative ('./').
 export default defineConfig({
   base: process.env.TAURI_ENV_PLATFORM ? './' : '/pos/',
+  // Demo product/menu photos (seed imageUrl 'demo/…') are shared by every app.
+  publicDir: '../../packages/demo-assets/public',
   plugins: [react()],
   envPrefix: ['VITE_', 'TAURI_ENV_'],
   server: { port: 5173, strictPort: true, hmr: { clientPort: 5170 } },

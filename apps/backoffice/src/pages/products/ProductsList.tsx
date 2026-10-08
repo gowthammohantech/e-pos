@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import type { Product } from '@elixir/contracts';
-import { Badge, Button, Card, DataTable, EmptyState, FilterChip, InlineAlert, KpiCard, Modal, SearchInput, Segmented, Select, StatusBadge, Textarea, useToast, type Column } from '@elixir/ui';
+import { Badge, Button, Card, DataTable, EmptyState, FilterChip, InlineAlert, KpiCard, Modal, SearchInput, Segmented, Select, StatusBadge, Textarea, Thumb, useToast, type Column } from '@elixir/ui';
 import { useLive } from '@elixir/local-store/react';
 import { money, number, qty as fq } from '@elixir/format';
 import { uid } from '@elixir/domain';
@@ -87,13 +87,16 @@ export function ProductsList() {
       header: 'Product',
       sortable: true,
       render: (p) => (
-        <div style={{ minWidth: 200 }}>
-          <div className="bo-cell-main">{p.name}{p.variantAttrs ? <span className="muted"> · {p.variantAttrs.color} / {p.variantAttrs.size}</span> : null}</div>
-          <div className="bo-cell-sub">
-            <span className="num">{p.sku}</span>
-            {p.weighted ? <> · PLU {p.plu}</> : null}
-            {p.molecule ? <> · {p.molecule}</> : null}
-            {p.model ? <> · {p.model}</> : null}
+        <div className="ex-row" style={{ gap: 10, minWidth: 240, flexWrap: 'nowrap' }}>
+          <Thumb src={p.imageUrl} name={p.name} color={L.categories.get(p.categoryId)?.color} size={40} />
+          <div style={{ minWidth: 0 }}>
+            <div className="bo-cell-main">{p.name}{p.variantAttrs ? <span className="muted"> · {p.variantAttrs.color} / {p.variantAttrs.size}</span> : null}</div>
+            <div className="bo-cell-sub">
+              <span className="num">{p.sku}</span>
+              {p.weighted ? <> · PLU {p.plu}</> : null}
+              {p.molecule ? <> · {p.molecule}</> : null}
+              {p.model ? <> · {p.model}</> : null}
+            </div>
           </div>
         </div>
       ),

@@ -1,0 +1,771 @@
+{
+  "_comment": "Search query per demo item. src: off = Open Food Facts pack shot ('brand-tag|product words'), commons = Wikimedia Commons search. pick = index of the chosen candidate; fit: pad letterboxes instead of cropping.",
+  "Aavin Toned Milk 500ml": {
+    "src": "off",
+    "q": "aavin|green magic milk"
+  },
+  "Amul Butter 100g": {
+    "src": "off",
+    "q": "amul|butter",
+    "pick": 3
+  },
+  "Amul Taaza Curd 400g": {
+    "src": "off",
+    "q": "amul|masti dahi"
+  },
+  "Britannia Cheese Slices 200g": {
+    "src": "commons",
+    "q": "cheese slices",
+    "pick": 1
+  },
+  "Milky Mist Paneer 200g": {
+    "src": "commons",
+    "q": "paneer",
+    "pick": 1
+  },
+  "India Gate Basmati Rice": {
+    "src": "commons",
+    "q": "basmati rice grains",
+    "pick": 1
+  },
+  "Ponni Boiled Rice": {
+    "src": "commons",
+    "q": "rice grains",
+    "pick": 0
+  },
+  "Aashirvaad Atta 5kg": {
+    "src": "off",
+    "q": "aashirvaad|atta",
+    "pick": 3
+  },
+  "Toor Dal": {
+    "src": "commons",
+    "q": "toor dal pigeon pea split",
+    "pick": 1
+  },
+  "Fortune Sunflower Oil 1L": {
+    "src": "commons",
+    "q": "sunflower oil bottle",
+    "pick": 2
+  },
+  "Idhayam Gingelly Oil 500ml": {
+    "src": "commons",
+    "q": "sesame oil bottle",
+    "pick": 0
+  },
+  "Tata Salt 1kg": {
+    "src": "off",
+    "q": "tata-salt|salt",
+    "pick": 0
+  },
+  "Sugar": {
+    "src": "commons",
+    "q": "white sugar crystals bowl",
+    "pick": 0
+  },
+  "Tata Tea Gold 500g": {
+    "src": "off",
+    "q": "tata-tea|gold",
+    "pick": 0
+  },
+  "Bru Instant Coffee 200g": {
+    "src": "off",
+    "q": "bru|instant coffee",
+    "pick": 0
+  },
+  "Narasus Filter Coffee 500g": {
+    "src": "commons",
+    "q": "ground coffee powder",
+    "pick": 3
+  },
+  "Coca-Cola 750ml": {
+    "src": "commons",
+    "q": "coca-cola bottle",
+    "pick": 1
+  },
+  "Tropicana Orange 1L": {
+    "src": "commons",
+    "q": "orange juice glass",
+    "pick": 0
+  },
+  "Bisleri Water 1L": {
+    "src": "commons",
+    "q": "bisleri bottle",
+    "pick": 2
+  },
+  "Lays Classic Salted 52g": {
+    "src": "off",
+    "q": "lay-s|classic salted",
+    "pick": 2
+  },
+  "Haldiram Aloo Bhujia 400g": {
+    "src": "off",
+    "q": "haldiram-s|aloo bhujia",
+    "pick": 0
+  },
+  "Britannia Good Day 250g": {
+    "src": "off",
+    "q": "britannia|good day",
+    "pick": 0
+  },
+  "Parle-G 800g": {
+    "src": "off",
+    "q": "parle|parle-g",
+    "pick": 3
+  },
+  "Cadbury Dairy Milk Silk": {
+    "src": "off",
+    "q": "cadbury|dairy milk silk",
+    "pick": 2
+  },
+  "Kurkure Masala Munch 90g": {
+    "src": "off",
+    "q": "kurkure|masala munch",
+    "pick": 0
+  },
+  "Colgate Strong Teeth 200g": {
+    "src": "commons",
+    "q": "toothpaste tube",
+    "pick": 2
+  },
+  "Dove Cream Beauty Bar 100g": {
+    "src": "commons",
+    "q": "bar of soap",
+    "pick": 1
+  },
+  "Head & Shoulders 340ml": {
+    "src": "commons",
+    "q": "shampoo bottle",
+    "pick": 3
+  },
+  "Parachute Coconut Oil 500ml": {
+    "src": "off",
+    "q": "parachute|coconut oil",
+    "pick": 0
+  },
+  "Dettol Handwash 200ml": {
+    "src": "off",
+    "q": "dettol|handwash",
+    "pick": 2
+  },
+  "Surf Excel Easy Wash 1kg": {
+    "src": "commons",
+    "q": "laundry detergent powder",
+    "pick": 2
+  },
+  "Vim Dishwash Bar 300g": {
+    "src": "commons",
+    "q": "dish soap",
+    "pick": 1
+  },
+  "Harpic Power Plus 1L": {
+    "src": "commons",
+    "q": "toilet cleaner bottle",
+    "pick": 0
+  },
+  "Lizol Floor Cleaner 975ml": {
+    "src": "commons",
+    "q": "floor cleaner bottle",
+    "pick": 0
+  },
+  "Good Knight Gold Flash Refill": {
+    "src": "commons",
+    "q": "mosquito repellent",
+    "pick": 1
+  },
+  "Tomato": {
+    "src": "commons",
+    "q": "tomatoes red ripe",
+    "pick": 2
+  },
+  "Onion": {
+    "src": "commons",
+    "q": "red onions",
+    "pick": 2
+  },
+  "Potato": {
+    "src": "commons",
+    "q": "russet potatoes",
+    "pick": 1
+  },
+  "Banana Robusta": {
+    "src": "commons",
+    "q": "banana bunch",
+    "pick": 0
+  },
+  "Apple Shimla": {
+    "src": "commons",
+    "q": "red apples",
+    "pick": 0
+  },
+  "Carrot Ooty": {
+    "src": "commons",
+    "q": "carrots",
+    "pick": 0
+  },
+  "Coriander Bunch": {
+    "src": "commons",
+    "q": "coriander leaves bunch",
+    "pick": 0
+  },
+  "Modern White Bread 400g": {
+    "src": "commons",
+    "q": "white bread loaf sliced",
+    "pick": 1
+  },
+  "Britannia Rusk 300g": {
+    "src": "commons",
+    "q": "rusk toast",
+    "pick": 2
+  },
+  "Brown Bread 400g": {
+    "src": "commons",
+    "q": "whole wheat bread loaf",
+    "pick": 1
+  },
+  "Eggs Tray (30)": {
+    "src": "commons",
+    "q": "eggs tray",
+    "pick": 0
+  },
+  "MTR Rava Idli Mix 500g": {
+    "src": "commons",
+    "q": "rava idli",
+    "pick": 0
+  },
+  "Maggi 2-Minute Noodles 12pk": {
+    "src": "off",
+    "q": "maggi|2 minute masala noodles",
+    "pick": 0
+  },
+  "Kissan Mixed Fruit Jam 500g": {
+    "src": "off",
+    "q": "kissan|mixed fruit jam",
+    "pick": 0
+  },
+  "Saffola Gold Oil 1L": {
+    "src": "off",
+    "q": "saffola|gold",
+    "pick": 1
+  },
+  "Classic Oxford Shirt": {
+    "src": "commons",
+    "q": "oxford shirt",
+    "pick": 0
+  },
+  "Slim Fit Chinos": {
+    "src": "commons",
+    "q": "chino trousers",
+    "pick": 0
+  },
+  "Crew Neck Tee": {
+    "src": "commons",
+    "q": "black t-shirt",
+    "pick": 1
+  },
+  "Denim Jacket": {
+    "src": "commons",
+    "q": "denim jacket",
+    "pick": 1
+  },
+  "Cotton Kurta": {
+    "src": "commons",
+    "q": "kurta",
+    "pick": 1
+  },
+  "Floral Maxi Dress": {
+    "src": "commons",
+    "q": "floral maxi dress",
+    "pick": 0
+  },
+  "Linen Palazzo": {
+    "src": "commons",
+    "q": "palazzo pants",
+    "pick": 1
+  },
+  "Running Sneakers": {
+    "src": "commons",
+    "q": "running shoes white",
+    "pick": 2
+  },
+  "Leather Belt": {
+    "src": "commons",
+    "q": "leather belt",
+    "pick": 2
+  },
+  "Silk Saree": {
+    "src": "commons",
+    "q": "silk saree",
+    "pick": 0
+  },
+  "Dolo 650 Tablet": {
+    "src": "commons",
+    "q": "paracetamol tablets blister",
+    "pick": 1
+  },
+  "Crocin Advance 500mg": {
+    "src": "commons",
+    "q": "paracetamol tablets",
+    "pick": 1
+  },
+  "Azithral 500 Tablet": {
+    "src": "commons",
+    "q": "azithromycin tablets",
+    "pick": 0
+  },
+  "Augmentin 625 Duo": {
+    "src": "commons",
+    "q": "augmentin",
+    "pick": 1
+  },
+  "Pan 40 Tablet": {
+    "src": "commons",
+    "q": "pantoprazole tablets",
+    "pick": 0
+  },
+  "Digene Gel Mint 200ml": {
+    "src": "commons",
+    "q": "antacid",
+    "pick": 0
+  },
+  "Glycomet GP 1": {
+    "src": "commons",
+    "q": "metformin tablets",
+    "pick": 0
+  },
+  "Telma 40 Tablet": {
+    "src": "commons",
+    "q": "telmisartan",
+    "pick": 3
+  },
+  "Ecosprin 75": {
+    "src": "commons",
+    "q": "aspirin tablets",
+    "pick": 0
+  },
+  "Atorva 10": {
+    "src": "commons",
+    "q": "atorvastatin tablets",
+    "pick": 3
+  },
+  "Cetzine 10mg": {
+    "src": "commons",
+    "q": "cetirizine tablets",
+    "pick": 0
+  },
+  "Allegra 120mg": {
+    "src": "commons",
+    "q": "antihistamine tablets",
+    "pick": 0
+  },
+  "Benadryl Cough Syrup 150ml": {
+    "src": "commons",
+    "q": "cough syrup bottle",
+    "pick": 2
+  },
+  "Alprax 0.25": {
+    "src": "commons",
+    "q": "alprazolam tablets",
+    "pick": 0
+  },
+  "Becosules Capsule": {
+    "src": "commons",
+    "q": "capsules blister pack",
+    "pick": 3
+  },
+  "Shelcal 500": {
+    "src": "commons",
+    "q": "calcium tablets",
+    "pick": 1
+  },
+  "Revital H Capsule 30s": {
+    "src": "commons",
+    "q": "multivitamin",
+    "pick": 0
+  },
+  "Volini Spray 60g": {
+    "src": "commons",
+    "q": "aerosol spray can",
+    "pick": 3
+  },
+  "Moov Cream 50g": {
+    "src": "commons",
+    "q": "ointment tube",
+    "pick": 0
+  },
+  "Betadine Ointment 20g": {
+    "src": "commons",
+    "q": "betadine",
+    "pick": 1
+  },
+  "Dettol Antiseptic 250ml": {
+    "src": "commons",
+    "q": "antiseptic liquid",
+    "pick": 1
+  },
+  "Accu-Chek Active Strips 50": {
+    "src": "commons",
+    "q": "blood glucose meter",
+    "pick": 0
+  },
+  "N95 Mask": {
+    "src": "commons",
+    "q": "N95 mask",
+    "pick": 1
+  },
+  "ORS Electral Powder": {
+    "src": "commons",
+    "q": "oral rehydration salts sachet",
+    "pick": 1
+  },
+  "Montair LC Tablet": {
+    "src": "commons",
+    "q": "montelukast tablets",
+    "pick": 0
+  },
+  "Thyronorm 50mcg": {
+    "src": "commons",
+    "q": "levothyroxine tablets",
+    "pick": 0
+  },
+  "Samsung Galaxy S26 256GB": {
+    "src": "commons",
+    "q": "Samsung Galaxy S24",
+    "pick": 0
+  },
+  "iPhone 17 128GB": {
+    "src": "commons",
+    "q": "iPhone 15",
+    "pick": 1
+  },
+  "Redmi Note 15 Pro": {
+    "src": "commons",
+    "q": "Redmi Note smartphone",
+    "pick": 0
+  },
+  "OnePlus Nord 5": {
+    "src": "commons",
+    "q": "OnePlus Nord",
+    "pick": 3
+  },
+  "Dell Inspiron 15 i5": {
+    "src": "commons",
+    "q": "Dell laptop",
+    "pick": 0
+  },
+  "HP Pavilion x360": {
+    "src": "commons",
+    "q": "HP laptop",
+    "pick": 2
+  },
+  "MacBook Air M4": {
+    "src": "commons",
+    "q": "MacBook Air M2",
+    "pick": 0
+  },
+  "Sony WH-1000XM6": {
+    "src": "commons",
+    "q": "Sony headphones",
+    "pick": 3
+  },
+  "boAt Airdopes 141": {
+    "src": "commons",
+    "q": "wireless earbuds case",
+    "pick": 3
+  },
+  "JBL Flip 6 Speaker": {
+    "src": "commons",
+    "q": "JBL Flip speaker",
+    "pick": 1
+  },
+  "LG 55\" 4K OLED TV": {
+    "src": "commons",
+    "q": "LG OLED TV",
+    "pick": 2
+  },
+  "Samsung 43\" Crystal 4K": {
+    "src": "commons",
+    "q": "Samsung LED television",
+    "pick": 0
+  },
+  "Apple Watch Series 11": {
+    "src": "commons",
+    "q": "Apple Watch Series",
+    "pick": 1
+  },
+  "Anker 20W USB-C Charger": {
+    "src": "commons",
+    "q": "USB-C charger",
+    "pick": 0
+  },
+  "SanDisk 128GB Pendrive": {
+    "src": "commons",
+    "q": "SanDisk USB flash drive",
+    "pick": 2
+  },
+  "Logitech MX Master 3S": {
+    "src": "commons",
+    "q": "Logitech MX Master",
+    "pick": 1
+  },
+  "Diagnosis / Inspection Fee": {
+    "src": "commons",
+    "q": "mobile phone repair",
+    "pick": 3
+  },
+  "Screen Replacement Labour": {
+    "src": "commons",
+    "q": "cracked smartphone screen",
+    "pick": 0
+  },
+  "Battery Replacement Labour": {
+    "src": "commons",
+    "q": "smartphone battery replacement",
+    "pick": 1
+  },
+  "Charging Port Repair Labour": {
+    "src": "commons",
+    "q": "USB-C port phone",
+    "pick": 1
+  },
+  "Software Flash / OS Reinstall": {
+    "src": "commons",
+    "q": "android recovery mode",
+    "pick": 0
+  },
+  "Water Damage Cleaning": {
+    "src": "commons",
+    "q": "wet smartphone",
+    "pick": 0
+  },
+  "Laptop Keyboard Replacement Labour": {
+    "src": "commons",
+    "q": "laptop repair",
+    "pick": 1
+  },
+  "Laptop Service & Thermal Paste": {
+    "src": "commons",
+    "q": "laptop disassembled",
+    "pick": 2
+  },
+  "Galaxy S26 Display Assembly": {
+    "src": "commons",
+    "q": "smartphone screen replacement",
+    "pick": 0
+  },
+  "iPhone 17 Display Assembly": {
+    "src": "commons",
+    "q": "iPhone screen repair",
+    "pick": 0
+  },
+  "Redmi Note 15 Pro Display": {
+    "src": "commons",
+    "q": "LCD display module",
+    "pick": 0
+  },
+  "Galaxy S26 Battery 4000mAh": {
+    "src": "commons",
+    "q": "Samsung Galaxy battery",
+    "pick": 3
+  },
+  "iPhone 17 Battery": {
+    "src": "commons",
+    "q": "iPhone battery",
+    "pick": 1
+  },
+  "USB-C Charging Port Flex": {
+    "src": "commons",
+    "q": "flex cable",
+    "pick": 0
+  },
+  "Galaxy S26 Back Glass": {
+    "src": "commons",
+    "q": "smartphone back glass",
+    "pick": 0
+  },
+  "Laptop Keyboard (Dell 15)": {
+    "src": "commons",
+    "q": "laptop keyboard",
+    "pick": 2
+  },
+  "Thermal Paste MX-6 4g": {
+    "src": "commons",
+    "q": "thermal paste syringe",
+    "pick": 0
+  },
+  "Paneer Tikka": {
+    "src": "commons",
+    "q": "paneer tikka",
+    "pick": 3
+  },
+  "Chicken 65": {
+    "src": "commons",
+    "q": "chicken 65",
+    "pick": 0
+  },
+  "Gobi Manchurian": {
+    "src": "commons",
+    "q": "gobi manchurian",
+    "pick": 0
+  },
+  "Tandoori Chicken (Half)": {
+    "src": "commons",
+    "q": "tandoori chicken",
+    "pick": 0
+  },
+  "Apollo Fish": {
+    "src": "commons",
+    "q": "fish fry Indian",
+    "pick": 1
+  },
+  "Hara Bhara Kebab": {
+    "src": "commons",
+    "q": "hara bhara kabab",
+    "pick": 1
+  },
+  "Egg Bonda": {
+    "src": "commons",
+    "q": "bonda",
+    "pick": 1
+  },
+  "Butter Chicken": {
+    "src": "commons",
+    "q": "butter chicken",
+    "pick": 0
+  },
+  "Paneer Butter Masala": {
+    "src": "commons",
+    "q": "paneer butter masala",
+    "pick": 0
+  },
+  "Chettinad Chicken Curry": {
+    "src": "commons",
+    "q": "chettinad chicken",
+    "pick": 0
+  },
+  "Dal Makhani": {
+    "src": "commons",
+    "q": "dal makhani",
+    "pick": 0
+  },
+  "Kadai Vegetable": {
+    "src": "commons",
+    "q": "mixed vegetable curry",
+    "pick": 0
+  },
+  "Mutton Rogan Josh": {
+    "src": "commons",
+    "q": "rogan josh",
+    "pick": 0
+  },
+  "Wagyu Steak": {
+    "src": "commons",
+    "q": "steak plate",
+    "pick": 2
+  },
+  "Butter Naan": {
+    "src": "commons",
+    "q": "butter naan",
+    "pick": 1
+  },
+  "Garlic Naan": {
+    "src": "commons",
+    "q": "garlic naan",
+    "pick": 0
+  },
+  "Tandoori Roti": {
+    "src": "commons",
+    "q": "tandoori roti",
+    "pick": 0
+  },
+  "Malabar Parotta": {
+    "src": "commons",
+    "q": "kerala parotta",
+    "pick": 1
+  },
+  "Chicken Dum Biryani": {
+    "src": "commons",
+    "q": "chicken biryani",
+    "pick": 3
+  },
+  "Mutton Biryani": {
+    "src": "commons",
+    "q": "mutton biryani",
+    "pick": 2
+  },
+  "Veg Pulao": {
+    "src": "commons",
+    "q": "vegetable pulao",
+    "pick": 1
+  },
+  "Jeera Rice": {
+    "src": "commons",
+    "q": "jeera rice",
+    "pick": 1
+  },
+  "Curd Rice": {
+    "src": "commons",
+    "q": "curd rice",
+    "pick": 1
+  },
+  "Filter Coffee": {
+    "src": "commons",
+    "q": "south indian filter coffee",
+    "pick": 0
+  },
+  "Masala Chai": {
+    "src": "commons",
+    "q": "masala chai glass",
+    "pick": 1
+  },
+  "Fresh Lime Soda": {
+    "src": "commons",
+    "q": "lime soda",
+    "pick": 0
+  },
+  "Mango Lassi": {
+    "src": "commons",
+    "q": "mango lassi",
+    "pick": 3
+  },
+  "Cold Coffee": {
+    "src": "commons",
+    "q": "iced coffee glass",
+    "pick": 0
+  },
+  "Mineral Water": {
+    "src": "commons",
+    "q": "bisleri bottle",
+    "pick": 2
+  },
+  "Gulab Jamun": {
+    "src": "commons",
+    "q": "gulab jamun",
+    "pick": 0
+  },
+  "Rasmalai": {
+    "src": "commons",
+    "q": "rasmalai",
+    "pick": 1
+  },
+  "Brownie with Ice Cream": {
+    "src": "commons",
+    "q": "brownie ice cream",
+    "pick": 2
+  },
+  "Elaneer Payasam": {
+    "src": "commons",
+    "q": "payasam",
+    "pick": 0
+  },
+  "North Indian Thali": {
+    "src": "commons",
+    "q": "north indian thali",
+    "pick": 1
+  },
+  "Non-Veg Meal Combo": {
+    "src": "commons",
+    "q": "non veg thali",
+    "pick": 0
+  }
+}

@@ -10,7 +10,7 @@ import { useApp, useSession } from '../../src/lib/app';
 import { setAvailability } from '../../src/lib/actions';
 import { useTheme } from '../../src/lib/theme';
 import { HealthBadge } from '../../src/ui/stock';
-import { Badge, Card, Chip, ChipRow, Divider, EmptyState, FoodMark, Header, ListRow, OfflinePill, Row, Screen, SearchField, SectionTitle, Segmented, T, useToast } from '../../src/ui';
+import { Badge, Card, Chip, ChipRow, Divider, EmptyState, Header, ListRow, OfflinePill, Row, Screen, SearchField, SectionTitle, Segmented, T, Thumb, useToast } from '../../src/ui';
 
 type View_ = 'search' | 'low' | 'expiry';
 
@@ -144,9 +144,9 @@ function MenuAvailability() {
             <Card padded={false}>
               {list.map((m, i) => (
                 <View key={m.id}>
-                  {i ? <Divider inset={44} /> : null}
+                  {i ? <Divider inset={72} /> : null}
                   <ListRow
-                    left={<FoodMark type={m.foodType} size={16} />}
+                    left={<Thumb src={m.imageUrl} name={m.name} color={c.color} size={44} />}
                     title={m.name}
                     subtitle={`${money(m.pricePaise)} · ${m.prepMinutes} min`}
                     right={
